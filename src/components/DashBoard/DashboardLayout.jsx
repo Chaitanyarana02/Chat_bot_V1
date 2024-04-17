@@ -7,6 +7,8 @@ import { useState } from "react";
 const DashboardLayout = () => {
   const [selectedQuestion, setSelectedQuestion] = useState("");
   const [askQuestionsData, setAskQuestionsData] = useState([]);
+  const [explainData , setExplainData] = useState([]);
+  const [passingFlag , setPassingFlag] = useState();
 
   const handleQuestionSelect = (question) => {
     setSelectedQuestion(question);
@@ -14,6 +16,15 @@ const DashboardLayout = () => {
 
   const handleAskQuestionData = (askQuestionData) => {
     setAskQuestionsData(askQuestionData);
+  };
+
+  const handelExplanation = (explainationDatas) => {
+    setExplainData(explainationDatas);
+  };
+  
+
+  const handlePassingData = (pssingFlag) => {
+    setPassingFlag(pssingFlag)
   };
 
   return (
@@ -24,10 +35,10 @@ const DashboardLayout = () => {
         </div>
 
         <div className="flex w-full">
-          <PopularQuestions onQuestionSelect={handleQuestionSelect} />
+          <PopularQuestions onQuestionSelect={handleQuestionSelect} explainData={explainData} passingFlag={passingFlag}  />
 
           <div className="flex flex-col w-full">
-            <Home askQuestionsData={askQuestionsData} selectedQuestion={selectedQuestion}    setSelectedQuestion={setSelectedQuestion} onAskQuestionData={handleAskQuestionData} />
+            <Home askQuestionsData={askQuestionsData} selectedQuestion={selectedQuestion}    setSelectedQuestion={setSelectedQuestion} onAskQuestionData={handleAskQuestionData} onExplainationData ={handelExplanation} onPassingData={handlePassingData} />
 
             {/* <EnterQuestion
               selectedQuestion={selectedQuestion}

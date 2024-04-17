@@ -1,0 +1,70 @@
+/* Popup.css */
+.cover-window {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(157, 157, 159, 0.5); /* Light gray background color with some transparency */
+    z-index: 999; /* Ensure the background covers everything */
+  }
+  
+  .popup-container {
+    position: fixed;
+    opacity: 1;
+    border: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff; /* Light gray background color */
+   
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .popup-header {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .popup-content {
+    margin-bottom: 20px;
+  }
+  
+  .popup-buttons {
+    text-align: center;
+  }
+  
+  .popup-button {
+    padding: 8px 16px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .custom-dropdown {
+    appearance: none;
+    background-color: #f6f7f8;
+    padding: 0.5rem 1rem;
+    width: 100%;
+    margin-top: 2%;
+    font-size: 14px; /* Adjust font size as needed */
+    border: 1px solid #ccc;
+    border-radius: 20px; /* Adjust border radius as needed */
+    cursor: pointer;
+  }
+  
+  .custom-dropdown:focus {
+    outline: none;
+  }
+  
+  .custom-dropdown option {
+    background-color: #fff; /* Background color for options */
+  }
+  
+  .custom-dropdown option:checked {
+    background-color: #f0f0f0; /* Background color when option is selected */
+  }
+  
