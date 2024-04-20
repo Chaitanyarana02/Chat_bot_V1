@@ -17,6 +17,7 @@ import ExplainAnswer from "../../awsFunctions/ExplainAns";
 import { useRef, useState, useEffect } from "react";
 
 import { MdCheckCircle } from 'react-icons/md'; // Import the success icon
+import { json } from "react-router-dom";
 
 
 const Home = ({ selectedQuestion, setSelectedQuestion, onAskQuestionData ,onExplainationData ,onPassingData }) => {
@@ -120,10 +121,18 @@ const Home = ({ selectedQuestion, setSelectedQuestion, onAskQuestionData ,onExpl
 
   //handle Validation
 
-  const handleWarning = (required_id) => {
+  const handleWarning = ( item , required_id) => {
+    if (item.answer && item.answer.request_id === required_id) {
     setRequiredId(required_id);
     setShowPopup(!showPopup);
+    }
   } 
+  const closeWarning = () =>{
+    setShowPopup(!showPopup);
+
+  } 
+
+  
 
 
   const getIssu = (  issue  ) => {    
@@ -135,10 +144,8 @@ const Home = ({ selectedQuestion, setSelectedQuestion, onAskQuestionData ,onExpl
 
   const sendIssu = async () =>{
     const credentials = await authenticateAndSaveCredentials();
-    await LogIssu(credentials, required_id , issues ,otherIssue);
-     await setShowPopup(!showPopup);
-    await notify("Email was successfully sent to support team");
-
+    LogIssu(credentials, required_id , issues ,otherIssue);
+    setShowPopup(!showPopup);
   }
 
 
@@ -263,6 +270,13 @@ const Home = ({ selectedQuestion, setSelectedQuestion, onAskQuestionData ,onExpl
 
 
 
+// Handle Enter Key press
+const handleKeyPress = (event) => {
+  if (event.key === 'Enter') {
+    // Call your function here
+    handleAskQuestion();
+  }
+};
 
 
   // Scroll to the bottom when answerDataHistory changes
@@ -307,59 +321,82 @@ const Home = ({ selectedQuestion, setSelectedQuestion, onAskQuestionData ,onExpl
                 {!item.answer ? (
 
                   <div className="flex items-start gap-2">
-                    <div className="text-start bg-[#f3f4f5] py-[16px] px-[24px] text-[14px] font-normal leading-[20px] rounded-2xl w-full max-w-[700px]">
-                      <div>
-                        <svg
-                          width="24"
-                          height="26"
-                          viewBox="0 0 24 26"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <circle
-                            cx="2.25"
-                            cy="14.25"
-                            r="2.25"
-                            fill="#1C1C1F"
-                            fillOpacity="0.3"
-                          >
-                            <animate
-                              attributeName="fill"
-                              values="#1C1C1F; #707070; #1C1C1F"
-                              dur="1s"
-                              repeatCount="indefinite"
-                            />
-                          </circle>
-                          <circle cx="10.5" cy="14.25" r="3" fill="#707070">
-                            <animate
-                              attributeName="fill"
-                              values="#707070; #1C1C1F; #707070"
-                              dur="1s"
-                              repeatCount="indefinite"
-                            />
-                          </circle>
-                          <circle cx="20.25" cy="14.25" r="3.75" fill="#1C1C1F">
-                            <animate
-                              attributeName="fill"
-                              values="#1C1C1F; #707070; #1C1C1F"
-                              dur="1s"
-                              repeatCount="indefinite"
-                            />
-                            <animate
-                              attributeName="r"
-                              values="3.75; 4; 3.75"
-                              dur="1s"
-                              repeatCount="indefinite"
-                            />
-                          </circle>
-                        </svg>
+                    <div className="text-start bg-[#f3f4f5] py-[14px] pl-[18px] pr-[3px] text-[14px] font-normal leading-[20px] rounded-2xl w-full max-w-[700px]"style={{ borderRadius: "18px 18px 18px 0px " }}>
+                    <svg
+                      width="50"
+                      height="18"
+                      viewBox="0 0 120 40"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle cx="15" cy="20" r="3" fill="lightgray">
+                        <animate
+                          attributeName="fill"
+                          values="lightgray; black; lightgray"
+                          dur="1s"
+                          repeatCount="indefinite"
+                          keyTimes="0; 0.5; 1"
+                          keySplines="0.42, 0, 0.58, 1; 0.42, 0, 0.58, 1"
+                          begin="0s" // Start animation immediately
+                        />
+                        <animate
+                          attributeName="r"
+                          values="3; 7; 3"
+                          dur="1s"
+                          repeatCount="indefinite"
+                          keyTimes="0; 0.5; 1"
+                          keySplines="0.42, 0, 0.58, 1; 0.42, 0, 0.58, 1"
+                          begin="0s" // Start animation immediately
+                        />
+                      </circle>
+                      <circle cx="40" cy="20" r="3" fill="lightgray">
+                        <animate
+                          attributeName="fill"
+                          values="lightgray; black; lightgray"
+                          dur="1s"
+                          repeatCount="indefinite"
+                          keyTimes="0; 0.5; 1"
+                          keySplines="0.42, 0, 0.58, 1; 0.42, 0, 0.58, 1"
+                          begin="0.3s" // Delay animation for 0.3 seconds
+                        />
+                        <animate
+                          attributeName="r"
+                          values="3; 7; 3"
+                          dur="1s"
+                          repeatCount="indefinite"
+                          keyTimes="0; 0.5; 1"
+                          keySplines="0.42, 0, 0.58, 1; 0.42, 0, 0.58, 1"
+                          begin="0.3s" // Delay animation for 0.3 seconds
+                        />
+                      </circle>
+                      <circle cx="65" cy="20" r="3" fill="lightgray">
+                        <animate
+                          attributeName="fill"
+                          values="lightgray; black; lightgray"
+                          dur="1s"
+                          repeatCount="indefinite"
+                          keyTimes="0; 0.5; 1"
+                          keySplines="0.42, 0, 0.58, 1; 0.42, 0, 0.58, 1"
+                          begin="0.6s" // Delay animation for 0.6 seconds
+                        />
+                        <animate
+                          attributeName="r"
+                          values="3; 7; 3"
+                          dur="1s"
+                          repeatCount="indefinite"
+                          keyTimes="0; 0.5; 1"
+                          keySplines="0.42, 0, 0.58, 1; 0.42, 0, 0.58, 1"
+                          begin="0.6s" // Delay animation for 0.6 seconds
+                        />
+                      </circle>
+                    </svg>
+
                       </div>
                     </div>
-                  </div>
+                
                 ) : (
 
                   <div className="flex items-start w-full gap-2">
-                    <div className="text-start bg-[#f3f4f5] py-[16px] px-[24px] text-[14px] font-normal leading-[20px] rounded-2xl w-full max-w-[700px]">
+                    <div className="text-start bg-[#f3f4f5] py-[16px] px-[24px] text-[14px] font-normal leading-[20px] rounded-2xl w-full max-w-[700px]"style={{ borderRadius: "18px 18px 18px 0px" }}>
                       <div className="flex flex-col gap-2">
                         <p className="mb-2">Here is your sales by category in 2022</p>
 
@@ -443,7 +480,7 @@ In the left panel you will see an explanation of why this answer was given and h
                       />
                       <img
                         // onClick={() => notify("Email was successfully sent to support team")}
-                        onClick={ () => {handleWarning(item.answer.request_id)}}
+                        onClick={ () => {handleWarning( item , item.answer.request_id)}}
                         src="/assets/home/warning.svg"
                         alt="warning"
                         className="cursor-pointer"
@@ -452,29 +489,12 @@ In the left panel you will see an explanation of why this answer was given and h
                       />
                     </div>
 
-                    {showPopup && ( 
-                                    <div className="cover-window">
-                                      <div className="popup-container  w-[500px]  mx:w-[100%]">
-                                          <div className="popup-header text-center mb-4 font-semibold ">Tell us more</div>
-                                          <div className="popup-content  text-center text-[16px] mb-3">AI responses are validated through various methods to ensure accuracy and reliability. If you encounter any issues or have further questions, you can send <br/> a message to our support team </div>
-                                          <div className="popup-header flex flex-col text-left text-[14px] font-semibold mt-[23px] mb-1 px-4">What problem did you face?
-                                          <Warning onWarning={getIssu} getOtherIssue={getOtherIssue} />
-                                          </div>
-                                     
-                                          <div className="popup-buttons mt-[23px] mb-3">
-                                            <button className="popup-button text-[14px] border-black border-solid border px-[40px] rounded-full font-semibold "  onClick={handleWarning} >Cancel</button>
-                                            <button className="popup-button text-[14px] bg-black text-white border-none px-[40px] rounded-full "   onClick={sendIssu}  >Send report</button>
-                                          </div>
-                                        </div>
-                                    </div>
-                                      
-                                      )}
-
+                    
                   </div>
 
 
                 )}
-
+       
 
                 <div ref={scrollRef} />
               </div>
@@ -482,7 +502,23 @@ In the left panel you will see an explanation of why this answer was given and h
 
 
 
-
+            {showPopup && required_id && ( 
+                <div className="cover-window">
+                  <div className="popup-container  w-[500px]  mx:w-[100%]">
+                      <div className="popup-header text-center mb-4 font-semibold ">Tell us more</div>
+                      <div className="popup-content  text-center text-[16px] mb-3">AI responses are validated through various methods to ensure accuracy and reliability. If you encounter any issues or have further questions, you can send <br/> a message to our support team </div>
+                      <div className="popup-header flex flex-col text-left text-[14px] font-semibold mt-[23px] mb-1 px-4">What problem did you face?
+                      <Warning onWarning={getIssu} getOtherIssue={getOtherIssue} />
+                      </div>
+                  
+                      <div className="popup-buttons mt-[23px] mb-3">
+                        <button className="popup-button text-[14px] border-black border-solid border px-[40px] rounded-full font-semibold "  onClick={closeWarning} >Cancel</button>
+                        <button className="popup-button text-[14px] bg-black text-white border-none px-[40px] rounded-full "   onClick={sendIssu}  >Send report</button>
+                      </div>
+                    </div>
+                </div>
+                  
+                  )}
           </div>
         </div>
       ) : (
@@ -499,6 +535,7 @@ In the left panel you will see an explanation of why this answer was given and h
           <input
             value={selectedQuestion}
             onChange={handleInputChange}
+            onKeyPress={handleKeyPress}
             type="text"
             placeholder="Enter your question here"
             className="text-[14px] leading-[20px] font-medium font-[Montserrat, sans-serif] border-none bg-[#f7f8f8] px-[16px] py-[12px] pr-[50px] pl-[16px] rounded-[22px] text-[#000] outline-none placeholder:text-[#1c1c1f99] w-full"

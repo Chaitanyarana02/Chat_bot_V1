@@ -29,7 +29,7 @@ const DropDownButton = ({explaiNation}) => {
           aria-haspopup="true"
           aria-expanded={isOpen ? "true" : "false"}
         >
-          {selectedOption}
+          {selectedOption == 'deeper' ? "Deeper" : "Tangential"}
           {isOpen ? (
         <FaChevronUp className="transform  transition-transform duration-300" />
       ) : (

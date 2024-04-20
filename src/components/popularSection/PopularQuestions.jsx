@@ -81,7 +81,7 @@ const PopularQuestions = ({ onQuestionSelect ,explainData ,passingFlag }) => {
       {  optionVisible && explanationData.length == 0   ?
 
         ( <div className="flex  iteams-center justify-between p-0">
-          <p  className="title p-0 text-[18px] font-semibold leading-[30px] whitespace-nowrap tracking-normal text-[#1c1c1f] mb-[36px]">Suggested questions:{selectedOption}</p>
+          <p  className="title p-0 text-[18px] font-semibold leading-[30px] whitespace-nowrap tracking-normal text-[#1c1c1f] mb-[36px]">{selectedOption === 'deeper' ? 'Deeper' : 'Tangential'} Suggested Questions</p>
           <svg onClick={markAsVsisble} className="mb-[36px] cursor-pointer" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M5 15L15 5M5 5L15 15" stroke="#1C1C1F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -96,12 +96,7 @@ const PopularQuestions = ({ onQuestionSelect ,explainData ,passingFlag }) => {
           <path d="M5 15L15 5M5 5L15 15" stroke="#1C1C1F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
             </div>
-          
-          
-          
-          
-          
-          </> ) : ("Popular questions") }</p>)
+          </> ) : ("Popular Questions") }</p>)
 
       }
 
@@ -109,63 +104,109 @@ const PopularQuestions = ({ onQuestionSelect ,explainData ,passingFlag }) => {
 
   
             <>
-              {   passingFlag  ? ( <div>
-            <svg
-              width="24"
-              height="26"
-              viewBox="0 0 24 26"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle
-                cx="2.25"
-                cy="14.25"
-                r="2.25"
-                fill="#1C1C1F"
-                fillOpacity="0.3"
+              {   passingFlag  ? ( 
+                <div
+   
+                className="flex items-center justify-start mb-2 gap-3 bg-white white-card cursor-pointer py-[12px] px-[16px] rounded-[12px]"
               >
-                <animate
-                  attributeName="fill"
-                  values="#1C1C1F; #707070; #1C1C1F"
-                  dur="1s"
-                  repeatCount="indefinite"
-                />
-              </circle>
-              <circle cx="10.5" cy="14.25" r="3" fill="#707070">
-                <animate
-                  attributeName="fill"
-                  values="#707070; #1C1C1F; #707070"
-                  dur="1s"
-                  repeatCount="indefinite"
-                />
-              </circle>
-              <circle cx="20.25" cy="14.25" r="3.75" fill="#1C1C1F">
-                <animate
-                  attributeName="fill"
-                  values="#1C1C1F; #707070; #1C1C1F"
-                  dur="1s"
-                  repeatCount="indefinite"
-                />
-                <animate
-                  attributeName="r"
-                  values="3.75; 4; 3.75"
-                  dur="1s"
-                  repeatCount="indefinite"
-                />
-              </circle>
-            </svg>
+                <svg
+                      width="50"
+                      height="18"
+                      viewBox="0 0 120 40"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle cx="15" cy="20" r="3" fill="lightgray">
+                        <animate
+                          attributeName="fill"
+                          values="lightgray; black; lightgray"
+                          dur="1s"
+                          repeatCount="indefinite"
+                          keyTimes="0; 0.5; 1"
+                          keySplines="0.42, 0, 0.58, 1; 0.42, 0, 0.58, 1"
+                          begin="0s" // Start animation immediately
+                        />
+                        <animate
+                          attributeName="r"
+                          values="3; 7; 3"
+                          dur="1s"
+                          repeatCount="indefinite"
+                          keyTimes="0; 0.5; 1"
+                          keySplines="0.42, 0, 0.58, 1; 0.42, 0, 0.58, 1"
+                          begin="0s" // Start animation immediately
+                        />
+                      </circle>
+                      <circle cx="40" cy="20" r="3" fill="lightgray">
+                        <animate
+                          attributeName="fill"
+                          values="lightgray; black; lightgray"
+                          dur="1s"
+                          repeatCount="indefinite"
+                          keyTimes="0; 0.5; 1"
+                          keySplines="0.42, 0, 0.58, 1; 0.42, 0, 0.58, 1"
+                          begin="0.3s" // Delay animation for 0.3 seconds
+                        />
+                        <animate
+                          attributeName="r"
+                          values="3; 7; 3"
+                          dur="1s"
+                          repeatCount="indefinite"
+                          keyTimes="0; 0.5; 1"
+                          keySplines="0.42, 0, 0.58, 1; 0.42, 0, 0.58, 1"
+                          begin="0.3s" // Delay animation for 0.3 seconds
+                        />
+                      </circle>
+                      <circle cx="65" cy="20" r="3" fill="lightgray">
+                        <animate
+                          attributeName="fill"
+                          values="lightgray; black; lightgray"
+                          dur="1s"
+                          repeatCount="indefinite"
+                          keyTimes="0; 0.5; 1"
+                          keySplines="0.42, 0, 0.58, 1; 0.42, 0, 0.58, 1"
+                          begin="0.6s" // Delay animation for 0.6 seconds
+                        />
+                        <animate
+                          attributeName="r"
+                          values="3; 7; 3"
+                          dur="1s"
+                          repeatCount="indefinite"
+                          keyTimes="0; 0.5; 1"
+                          keySplines="0.42, 0, 0.58, 1; 0.42, 0, 0.58, 1"
+                          begin="0.6s" // Delay animation for 0.6 seconds
+                        />
+                      </circle>
+                    </svg>
           </div>) : (   <div className="h-[calc(100% - 60px)] overflow-auto">
-                            {explanationData.Steps.map((data, index) => (
-                              <div
-                                key={index}
-                                className="flex items-center justify-start mb-2 gap-3 bg-white white-card cursor-pointer py-[12px] px-[16px] rounded-[12px]"
-                              >
-                                <div className="text-[14px] font-normal leading-[22px] tracking-normal">
-                                  {data.Step}
-                                </div>
-                              </div>
-                            ))}
-                          </div>)}
+                
+                    <div className="flex items-left flex-col justify-start mb-2  bg-white white-card cursor-pointer py-[12px] px-[16px] rounded-[12px]">
+                    
+                    <div className="font-semibold text-[14px] mt-2 mb-2 ">Question Answered</div>
+
+
+                    <div className=" text-[14px] mb-0 ">{explanationData.Question}</div>
+
+                    <div className="font-semibold text-[14px] mt-2 mb-2">Logical Steps</div>
+
+                    <ol className="list-decimal">
+                    {explanationData.Steps.map((data, index) => (
+                      <li
+                        key={index}
+                        className="flex items-start justify-start mb-2 gap-2 bg-white white-card cursor-pointer  rounded-[12px]"
+                      >
+                        <span className="text-[13px] mt-[1px]">  {index + 1}.</span> 
+                        <div className="text-[13px] font-normal leading-[22px] tracking-normal">
+                           {data.Step}
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+
+
+
+                    </div>
+
+
+                    </div>)}
             
             </> 
           
@@ -175,51 +216,77 @@ const PopularQuestions = ({ onQuestionSelect ,explainData ,passingFlag }) => {
           
           :( <div>
         {isLoading ? (
-          <div>
-            <svg
-              width="24"
-              height="26"
-              viewBox="0 0 24 26"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle
-                cx="2.25"
-                cy="14.25"
-                r="2.25"
-                fill="#1C1C1F"
-                fillOpacity="0.3"
-              >
-                <animate
-                  attributeName="fill"
-                  values="#1C1C1F; #707070; #1C1C1F"
-                  dur="1s"
-                  repeatCount="indefinite"
-                />
-              </circle>
-              <circle cx="10.5" cy="14.25" r="3" fill="#707070">
-                <animate
-                  attributeName="fill"
-                  values="#707070; #1C1C1F; #707070"
-                  dur="1s"
-                  repeatCount="indefinite"
-                />
-              </circle>
-              <circle cx="20.25" cy="14.25" r="3.75" fill="#1C1C1F">
-                <animate
-                  attributeName="fill"
-                  values="#1C1C1F; #707070; #1C1C1F"
-                  dur="1s"
-                  repeatCount="indefinite"
-                />
-                <animate
-                  attributeName="r"
-                  values="3.75; 4; 3.75"
-                  dur="1s"
-                  repeatCount="indefinite"
-                />
-              </circle>
-            </svg>
+         <div
+   
+         className="flex items-center justify-start mb-2 gap-3 bg-white white-card cursor-pointer py-[12px] px-[16px] rounded-[12px]"
+       >
+              <svg
+                      width="50"
+                      height="18"
+                      viewBox="0 0 120 40"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle cx="15" cy="20" r="3" fill="lightgray">
+                        <animate
+                          attributeName="fill"
+                          values="lightgray; black; lightgray"
+                          dur="1s"
+                          repeatCount="indefinite"
+                          keyTimes="0; 0.5; 1"
+                          keySplines="0.42, 0, 0.58, 1; 0.42, 0, 0.58, 1"
+                          begin="0s" // Start animation immediately
+                        />
+                        <animate
+                          attributeName="r"
+                          values="3; 7; 3"
+                          dur="1s"
+                          repeatCount="indefinite"
+                          keyTimes="0; 0.5; 1"
+                          keySplines="0.42, 0, 0.58, 1; 0.42, 0, 0.58, 1"
+                          begin="0s" // Start animation immediately
+                        />
+                      </circle>
+                      <circle cx="40" cy="20" r="3" fill="lightgray">
+                        <animate
+                          attributeName="fill"
+                          values="lightgray; black; lightgray"
+                          dur="1s"
+                          repeatCount="indefinite"
+                          keyTimes="0; 0.5; 1"
+                          keySplines="0.42, 0, 0.58, 1; 0.42, 0, 0.58, 1"
+                          begin="0.3s" // Delay animation for 0.3 seconds
+                        />
+                        <animate
+                          attributeName="r"
+                          values="3; 7; 3"
+                          dur="1s"
+                          repeatCount="indefinite"
+                          keyTimes="0; 0.5; 1"
+                          keySplines="0.42, 0, 0.58, 1; 0.42, 0, 0.58, 1"
+                          begin="0.3s" // Delay animation for 0.3 seconds
+                        />
+                      </circle>
+                      <circle cx="65" cy="20" r="3" fill="lightgray">
+                        <animate
+                          attributeName="fill"
+                          values="lightgray; black; lightgray"
+                          dur="1s"
+                          repeatCount="indefinite"
+                          keyTimes="0; 0.5; 1"
+                          keySplines="0.42, 0, 0.58, 1; 0.42, 0, 0.58, 1"
+                          begin="0.6s" // Delay animation for 0.6 seconds
+                        />
+                        <animate
+                          attributeName="r"
+                          values="3; 7; 3"
+                          dur="1s"
+                          repeatCount="indefinite"
+                          keyTimes="0; 0.5; 1"
+                          keySplines="0.42, 0, 0.58, 1; 0.42, 0, 0.58, 1"
+                          begin="0.6s" // Delay animation for 0.6 seconds
+                        />
+                      </circle>
+                    </svg>
           </div>
         ) : (
 

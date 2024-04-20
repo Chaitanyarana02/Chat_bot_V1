@@ -15,6 +15,10 @@ const callLambdaFunction = async (credentials) => {
       } else {
         const response = JSON.parse(data.Payload);
         // console.log("Lambda response:", response);
+        
+
+      
+
         resolve(response);
       }
     });
