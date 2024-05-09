@@ -1,0 +1,59 @@
+@import "bootstrap/scss/bootstrap.scss";
+
+:root {
+  --page-bg: #fff;
+  --scroll-thumb: #141414;
+  --scroll-thumb-hover: #555;
+}
+
+[data-theme="dark"] {
+  --page-bg: linear-gradient(
+    308deg,
+    #000 -103.76%,
+    #1e1e1e 65.84%,
+    #067b41 267.05%
+  );
+  --scroll-thumb: #141414;
+  --scroll-thumb-hover: #555;
+}
+
+* {
+  transition: 0.3s all;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--scroll-thumb);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scroll-thumb-hover);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", sans-serif;
+  background: var(--page-bg);
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.inner-container {
+  max-width: 1440px;
+  margin: auto;
+}
