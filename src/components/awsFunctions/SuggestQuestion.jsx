@@ -16,7 +16,7 @@ const callLambdaFunction = async (credentials, action_type) => {
         console.error("Error calling Lambda:", err);
         reject(err);
       } else {
-        const response = JSON.parse(data.Payload);
+        const response = JSON.parse(data.Payload) ? JSON.parse(data.Payload)  :  [];
         // console.log("Lambda response:", response);
         resolve(response);
       }

@@ -48,7 +48,7 @@ const PopularQuestions = ({ onQuestionSelect ,explainData ,passingFlag }) => {
       const credentials = await authenticateAndSaveCredentials();
       const response = await suggestQuestion(credentials, select_type);
       const questions = JSON.parse(response.body);
-      setQuestionsData(questions.suggested_questions);
+      setQuestionsData(questions?.suggested_questions || null);
     setIsLoading(false);
 
       // dispatch(setQuestionsData(questions.suggested_questions));
@@ -289,27 +289,56 @@ const PopularQuestions = ({ onQuestionSelect ,explainData ,passingFlag }) => {
                     </svg>
           </div>
         ) : (
+          <div>{!questionsData ? (
 
-            
-
-          <div className="h-[calc(100% - 60px)] overflow-auto">
-            {questionsData.map((question, index) => (
-              <div
-                key={index}
-                className="flex items-center justify-start mb-2 gap-3 bg-white white-card cursor-pointer py-[12px] px-[16px] rounded-[12px]"
-                onClick={() => handleQuestionClick(question.question_text)}
-              >
-                <img
-                  src="/assets/popular/chat.svg"
-                  alt="chat"
-                  className="chat-icon"
-                />
-                <div className="text-[14px] font-normal leading-[22px] tracking-normal">
-                  {question.question_text}
+          <>
+         <div
+                
+                  className="flex items-center justify-start mb-2 gap-3 bg-white white-card cursor-pointer py-[12px] px-[16px] rounded-[12px]"
+                  onClick={() => suggestedQuestionApiCalling(selectedOption)}
+                >
+                  {/* <img
+                    src="/assets/popular/chat.svg"
+                    alt="chat"
+                    className="chat-icon"
+                  /> */}
+                  <div className="text-[14px] font-normal leading-[22px] tracking-normal">
+                   Question Was Not Avaliable
+                  </div>
                 </div>
-              </div>
-            ))}
+          </>
+          
+          ) : (
+          
+          <>
+             <div className="h-[calc(100% - 60px)] overflow-auto">
+              {questionsData.map((question, index) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-start mb-2 gap-3 bg-white white-card cursor-pointer py-[12px] px-[16px] rounded-[12px]"
+                  onClick={() => handleQuestionClick(question.question_text)}
+                >
+                  <img
+                    src="/assets/popular/chat.svg"
+                    alt="chat"
+                    className="chat-icon"
+                  />
+                  <div className="text-[14px] font-normal leading-[22px] tracking-normal">
+                    {question.question_text}
+                  </div>
+                </div>
+              ))}
           </div>
+          </>
+          
+        
+        
+        
+        
+        )}</div>
+          
+
+          
         )}
       </div>
     )  }
