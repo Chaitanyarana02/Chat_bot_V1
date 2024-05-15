@@ -11,6 +11,8 @@ import Swal from 'sweetalert2';
 
 import authenticateAndSaveCredentials from "../../../helper/awsAuth";
 import AskQuestion from "../../awsFunctions/AskQuestion";
+import LogThumbsUp from "../../awsFunctions/LogThumbsUp";
+import SendResults from "../../awsFunctions/SendResults";
 import LogIssu from "../../awsFunctions/LogIssue";
 import ExplainAnswer from "../../awsFunctions/ExplainAns";
 
@@ -106,7 +108,7 @@ const Home = ({ selectedQuestion, setSelectedQuestion, onAskQuestionData ,onExpl
 
 
   // is Like Flag
-  const handleClick = (item, requiredRequestId) => {
+  const handleClick  = async (item, requiredRequestId) => {
     if (item.answer && item.answer.request_id === requiredRequestId) {
       const img = document.getElementById(`likeButton_${item.answer.request_id}`);
       if (img.src.endsWith("/assets/home/darkThumbh.svg")) {
@@ -114,9 +116,26 @@ const Home = ({ selectedQuestion, setSelectedQuestion, onAskQuestionData ,onExpl
 
       } else {
         img.src = "/assets/home/darkThumbh.svg";
+        const credentials = await authenticateAndSaveCredentials();
+    const response =  await LogThumbsUp(credentials, requiredRequestId);
+
       }
     }
   };
+
+   const handleEmailsClick  = async (item, requiredRequestId) => {
+      if (item.answer && item.answer.request_id === requiredRequestId) {
+        const img = document.getElementById(`email_${item.answer.request_id}`);
+        img.src = "/assets/home/reload.svg";
+          const credentials = await authenticateAndSaveCredentials();
+          const response =  await SendResults(credentials, requiredRequestId);
+          if (response){
+          notify("Email was successfully sent")
+          img.src="/assets/home/emailLogo.svg"
+          }
+          }
+        
+    };
 
 
   //handle Validation
@@ -398,7 +417,7 @@ const handleKeyPress = (event) => {
                   <div className="flex items-start w-full gap-2">
                     <div className="text-start bg-[#f3f4f5] py-[16px] px-[24px] text-[14px] font-normal leading-[20px] rounded-2xl w-full max-w-[700px]"style={{ borderRadius: "18px 18px 18px 0px" }}>
                       <div className="flex flex-col gap-2">
-                        <p className="mb-2">Here is your sales by category in 2022</p>
+                        <p className="mb-2"></p>
 
 
                         {generateTable(item.answer.answer)}
@@ -453,12 +472,14 @@ In the left panel you will see an explanation of why this answer was given and h
                         height={16}
                       />
                       <img
-                        onClick={() => notify("Email was successfully sent")}
+                        onClick={() => handleEmailsClick(item, item.answer.request_id)}
+                        // onClick={() => notify("Email was successfully sent")}
                         src="/assets/home/emailLogo.svg"
                         alt="emailLogo"
                         className="cursor-pointer"
                         width={16}
                         height={16}
+                        id={`email_${item.answer.request_id}`}
                       />
                       {/* <img
                         onClick={() => notify("Email was successfully sent")}

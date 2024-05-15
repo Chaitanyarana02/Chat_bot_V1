@@ -15,9 +15,9 @@ const PopularQuestions = ({ onQuestionSelect ,explainData ,passingFlag }) => {
 
   useEffect( ()=> {
 
-    if(explainData && explainData.Question){
-      setExplanationData(explainData)
-    } 
+    if(explainData.explanation ){
+      setExplanationData(explainData.explanation)
+    }
 
   },[explainData]);
 
@@ -34,7 +34,7 @@ const PopularQuestions = ({ onQuestionSelect ,explainData ,passingFlag }) => {
 
   useEffect(() => {
     if (isLoading ) {
-   
+
       if(!optionVisible){
       suggestedQuestionApiCalling();
 
@@ -71,10 +71,10 @@ const PopularQuestions = ({ onQuestionSelect ,explainData ,passingFlag }) => {
       suggestedQuestionApiCalling('');
       setOptionVisible(false)
     }
-    
-  };  
 
-    
+  };
+
+
   return (
     <div className="bg-[#f4f4f8] p-[28px] h-screen w-[400px] min-w-[400px]">
 
@@ -91,7 +91,7 @@ const PopularQuestions = ({ onQuestionSelect ,explainData ,passingFlag }) => {
           { explanationData.length  == undefined?  ( <>
             <div className="flex iteams-center justify-between">
             <h1>Explanation</h1>
-          
+
             <svg onClick={markAsVsisble} className="mb-[36px] cursor-pointer" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M5 15L15 5M5 5L15 15" stroke="#1C1C1F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -102,11 +102,11 @@ const PopularQuestions = ({ onQuestionSelect ,explainData ,passingFlag }) => {
 
 { explanationData.length  == undefined ||passingFlag  ? (
 
-  
+
             <>
-              {   passingFlag  ? ( 
+              {   passingFlag  ? (
                 <div
-   
+
                 className="flex items-center justify-start mb-2 gap-3 bg-white white-card cursor-pointer py-[12px] px-[16px] rounded-[12px]"
               >
                 <svg
@@ -177,9 +177,9 @@ const PopularQuestions = ({ onQuestionSelect ,explainData ,passingFlag }) => {
                       </circle>
                     </svg>
           </div>) : (   <div className="h-[calc(100% - 60px)] overflow-auto">
-                
+
                     <div className="flex items-left flex-col justify-start mb-2  bg-white white-card cursor-pointer py-[12px] px-[16px] rounded-[12px]">
-                    
+
                     <div className="font-semibold text-[14px] mt-2 mb-2 ">Question Answered</div>
 
 
@@ -193,7 +193,7 @@ const PopularQuestions = ({ onQuestionSelect ,explainData ,passingFlag }) => {
                         key={index}
                         className="flex items-start justify-start mb-2 gap-2 bg-white white-card cursor-pointer  rounded-[12px]"
                       >
-                        <span className="text-[13px] mt-[1px]">  {index + 1}.</span> 
+                        <span className="text-[13px] mt-[1px]">  {index + 1}.</span>
                         <div className="text-[13px] font-normal leading-[22px] tracking-normal">
                            {data.Step}
                         </div>
@@ -207,17 +207,17 @@ const PopularQuestions = ({ onQuestionSelect ,explainData ,passingFlag }) => {
 
 
                     </div>)}
-            
-            </> 
-          
+
+            </>
+
         )
-      
+
           //blow code Populare condition
-          
+
           :( <div>
         {isLoading ? (
          <div
-   
+
          className="flex items-center justify-start mb-2 gap-3 bg-white white-card cursor-pointer py-[12px] px-[16px] rounded-[12px]"
        >
               <svg
@@ -293,7 +293,7 @@ const PopularQuestions = ({ onQuestionSelect ,explainData ,passingFlag }) => {
 
           <>
          <div
-                
+
                   className="flex items-center justify-start mb-2 gap-3 bg-white white-card cursor-pointer py-[12px] px-[16px] rounded-[12px]"
                   onClick={() => suggestedQuestionApiCalling(selectedOption)}
                 >
@@ -307,9 +307,9 @@ const PopularQuestions = ({ onQuestionSelect ,explainData ,passingFlag }) => {
                   </div>
                 </div>
           </>
-          
+
           ) : (
-          
+
           <>
              <div className="h-[calc(100% - 60px)] overflow-auto">
               {questionsData.map((question, index) => (
@@ -330,20 +330,20 @@ const PopularQuestions = ({ onQuestionSelect ,explainData ,passingFlag }) => {
               ))}
           </div>
           </>
-          
-        
-        
-        
-        
-        )}</div>
-          
 
-          
+
+
+
+
+        )}</div>
+
+
+
         )}
       </div>
     )  }
 
-      
+
     </div>
   );
 };
