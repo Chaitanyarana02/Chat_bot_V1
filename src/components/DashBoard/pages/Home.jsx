@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 import authenticateAndSaveCredentials from "../../../helper/awsAuth";
 import AskQuestion from "../../awsFunctions/AskQuestion";
 import LogThumbsUp from "../../awsFunctions/LogThumbsUp";
+import DownloadResults from "../../awsFunctions/DownloadResults";
 import SendResults from "../../awsFunctions/SendResults";
 import LogIssu from "../../awsFunctions/LogIssue";
 import ExplainAnswer from "../../awsFunctions/ExplainAns";
@@ -135,6 +136,46 @@ const Home = ({ selectedQuestion, setSelectedQuestion, onAskQuestionData ,onExpl
           }
           }
         
+    };
+
+     const convertToCSV = (data) => {
+    const { headers, rows } = data;
+
+    // Combine headers and data into CSV rows
+    const csvRows = [
+      headers,
+      ...rows.map(row => headers.map(header => row[header])),
+    ];
+
+    // Convert the rows to a CSV string
+    const csvContent = csvRows.map(row => row.join(',')).join('\n');
+
+    return csvContent;
+  };
+
+  
+    const handleDownloadResults  = async (item, requiredRequestId) => {
+      if (item.answer && item.answer.request_id === requiredRequestId) {
+        const img = document.getElementById(`donwload_${item.answer.request_id}`);
+        img.src = "/assets/home/reload.svg";
+          const credentials = await authenticateAndSaveCredentials();
+          const response =  await DownloadResults(credentials, requiredRequestId);
+          if (response){
+            let data = JSON.parse(response.body);   
+            const csvContent = convertToCSV(data);
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+        
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'data.csv');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          notify("Email was successfully sent")
+          img.src="/assets/home/download.svg"
+          }
+          }  
     };
 
 
@@ -451,7 +492,7 @@ In the left panel you will see an explanation of why this answer was given and h
                                       )}
                         <ToastContainer />
 
-                        {item.answer.num_rows >= 10 ? (
+                        {item.answer.num_rows >= 25 ? (
                           <p className="mb-0">
                             The total amount of rows is {item.answer.num_rows}. In order to see full info,
                             please pick the download icon on the right panel of the answer.
@@ -464,12 +505,14 @@ In the left panel you will see an explanation of why this answer was given and h
 
                     <div className="flex flex-col gap-3">
                       <img
-                        onClick={() => notify("Download Successfully !!")}
+                        onClick={() =>handleDownloadResults(item, item.answer.request_id)}
                         src="/assets/home/download.svg"
+                        
                         alt="download"
                         className="cursor-pointer"
                         width={16}
                         height={16}
+                        id={`donwload_${item.answer.request_id}`}
                       />
                       <img
                         onClick={() => handleEmailsClick(item, item.answer.request_id)}
