@@ -168,7 +168,7 @@ const Home = ({ selectedQuestion, setSelectedQuestion, onAskQuestionData ,onExpl
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-          notify("Email was successfully sent")
+          notify("download successfully")
           img.src="/assets/home/download.svg"
           }
           }  
