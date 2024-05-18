@@ -138,20 +138,16 @@ const Home = ({ selectedQuestion, setSelectedQuestion, onAskQuestionData ,onExpl
         
     };
 
-     const convertToCSV = (data) => {
-    const { headers, rows } = data;
+    const convertToCSV = (data) => {
+        const keys = Object.keys(data[0]);
+        const csvHeader = keys.join(",") + "\n";
+        const csvRows = data.map(row => {
+            return keys.map(key => `"${row[key]}"`).join(",");
+        });
+        const csvContent = csvRows.join('\n');  
 
-    // Combine headers and data into CSV rows
-    const csvRows = [
-      headers,
-      ...rows.map(row => headers.map(header => row[header])),
-    ];
-
-    // Convert the rows to a CSV string
-    const csvContent = csvRows.map(row => row.join(',')).join('\n');
-
-    return csvContent;
-  };
+        return csvHeader + csvContent;
+    };  
 
   
     const handleDownloadResults  = async (item, requiredRequestId) => {
@@ -161,14 +157,14 @@ const Home = ({ selectedQuestion, setSelectedQuestion, onAskQuestionData ,onExpl
           const credentials = await authenticateAndSaveCredentials();
           const response =  await DownloadResults(credentials, requiredRequestId);
           if (response){
-            let data = JSON.parse(response.body);   
-            const csvContent = convertToCSV(data);
+            let data = JSON.parse(response.body); 
+             const csvContent = convertToCSV(data.answer);
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
         
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download', 'data.csv');
+            link.setAttribute('download', `${data.question}.csv`);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
