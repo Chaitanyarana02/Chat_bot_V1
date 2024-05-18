@@ -88,7 +88,7 @@ const PopularQuestions = ({ onQuestionSelect ,explainData ,passingFlag }) => {
 
           </div>)
         : (<p className="title text-[20px] font-semibold leading-[30px] tracking-normal text-[#1c1c1f] mb-[36px]">
-          { explanationData.length  == undefined?  ( <>
+          { explanationData.length  == undefined || passingFlag?  ( <>
             <div className="flex iteams-center justify-between">
             <h1>Explanation</h1>
 

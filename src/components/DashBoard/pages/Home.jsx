@@ -220,6 +220,7 @@ const Home = ({ selectedQuestion, setSelectedQuestion, onAskQuestionData ,onExpl
   const sendExplaination = async () => {
     onPassingData(true);
     closeExplainantion();
+    setExplainationData([]);
     const credentials = await authenticateAndSaveCredentials();
     const response =  await ExplainAnswer(credentials, required_id);
     setExplainationData(JSON.parse(response.body));
