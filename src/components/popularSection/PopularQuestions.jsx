@@ -42,6 +42,11 @@ const PopularQuestions = ({ onQuestionSelect ,explainData ,passingFlag }) => {
     }
   }, [isLoading]);
 
+
+  useEffect(()=>{
+    setOptionVisible(false);
+  },[passingFlag])
+
   const suggestedQuestionApiCalling = async (select_type) => {
     try {
       setIsLoading(true);
