@@ -8,17 +8,16 @@ import { selectOption } from "../../features/selectedOption/selectedOptionSlice"
 const PopularQuestions = ({ onQuestionSelect ,explainData ,passingFlag }) => {
   const [questionsData, setQuestionsData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [entiry, setIsentiry] = useState(true);
   const [optionVisible, setOptionVisible] = useState('');
-
-  const [explanationLoader , setexplanationLoader ] = useState(true);
   const [explanationData , setExplanationData ] = useState([]);
 
   useEffect( ()=> {
 
-    if(explainData.explanation ){
+    if(explainData.explanation && !entiry ){
       setExplanationData(explainData.explanation)
     }
-
+ 
   },[explainData]);
 
   const selectedOption = useSelector(
@@ -27,10 +26,20 @@ const PopularQuestions = ({ onQuestionSelect ,explainData ,passingFlag }) => {
 
   useEffect(() => {
     if (selectedOption === "deeper" || selectedOption === "tangential") {
+
+
+
+      setExplanationData([]);
+      setIsentiry(false);
+      // suggestedQuestionApiCalling('');
+      setOptionVisible(false);
       suggestedQuestionApiCalling(selectedOption);
+      
       setOptionVisible(selectedOption);
     }
   }, [selectedOption]);
+
+  
 
   useEffect(() => {
     if (isLoading ) {
@@ -44,8 +53,10 @@ const PopularQuestions = ({ onQuestionSelect ,explainData ,passingFlag }) => {
 
 
   useEffect(()=>{
-    setOptionVisible(false);
+    setOptionVisible(false);  
+    setIsentiry(false);
   },[passingFlag])
+
 
   const suggestedQuestionApiCalling = async (select_type) => {
     try {
@@ -73,31 +84,52 @@ const PopularQuestions = ({ onQuestionSelect ,explainData ,passingFlag }) => {
       suggestedQuestionApiCalling('');
     setOptionVisible(false)
     }else{
+      setExplanationData([]);
       suggestedQuestionApiCalling('');
       setOptionVisible(false)
     }
 
   };
 
+  const markAsVsisbleAgain = () => {
+    if(passingFlag){
+      setIsentiry(true);
+    // alert(passingFlag);
+    suggestedQuestionApiCalling();
+    }else{  
+      setExplanationData([]);
+      setIsentiry(false);
+      suggestedQuestionApiCalling('');
+      setOptionVisible(false)
+    }
+  }
 
   return (
     <div className="bg-[#f4f4f8] p-[28px] h-screen w-[400px] min-w-[400px]">
 
-      {  optionVisible && explanationData.length == 0   ?
+      {  optionVisible && explanationData.length == 0 || entiry  ?
 
-        ( <div className="flex  iteams-center justify-between p-0">
-          <p  className="title p-0 text-[18px] font-semibold leading-[30px] whitespace-nowrap tracking-normal text-[#1c1c1f] mb-[36px]">{selectedOption === 'deeper' ? 'Deeper' : 'Tangential'} Suggested Questions</p>
-          <svg onClick={markAsVsisble} className="mb-[36px] cursor-pointer" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        (      
+          
+          <div className="flex  iteams-center justify-between p-0">
+          <p  className="title p-0 text-[18px] font-semibold leading-[30px] whitespace-nowrap tracking-normal text-[#1c1c1f] mb-[36px]">  {entiry ? ( 'Popular Questions') : (selectedOption === 'deeper' ? 'Deeper Suggested Questions' : 'Tangential Suggested Questions')}</p>
+          {entiry ? (<></>) : (<> <svg onClick={markAsVsisble} className="mb-[36px] cursor-pointer" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M5 15L15 5M5 5L15 15" stroke="#1C1C1F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          </svg></>) } 
+          
 
-          </div>)
+          </div>
+          
+        
+        
+        
+        )
         : (<p className="title text-[20px] font-semibold leading-[30px] tracking-normal text-[#1c1c1f] mb-[36px]">
-          { explanationData.length  == undefined || passingFlag?  ( <>
+          { explanationData.length  == undefined || passingFlag && !entiry?  ( <>
             <div className="flex iteams-center justify-between">
             <h1>Explanation</h1>
 
-            <svg onClick={markAsVsisble} className="mb-[36px] cursor-pointer" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg onClick={markAsVsisbleAgain} className="mb-[36px] cursor-pointer" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M5 15L15 5M5 5L15 15" stroke="#1C1C1F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
             </div>
@@ -105,7 +137,7 @@ const PopularQuestions = ({ onQuestionSelect ,explainData ,passingFlag }) => {
 
       }
 
-{ explanationData.length  == undefined ||passingFlag  ? (
+{ explanationData.length  == undefined ||passingFlag && !entiry   ? (
 
 
             <>

@@ -14,6 +14,7 @@ const DropDownButton = ({explaiNation}) => {
 
   const handleOptionSelect = (option) => {
     // console.log("Selected option:", option);
+    // alert(option);
     setSelectedOption(option);
     dispatch(selectOption(option));
     setIsOpen(false);
